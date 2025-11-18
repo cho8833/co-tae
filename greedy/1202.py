@@ -1,27 +1,36 @@
 import sys
 import heapq
+from collections import deque
 
 N, K = map(int, input().split())
 
 jewels = []
 for _ in range(N):
-    M, V = list(map(int, sys.stdin.readline().rstrip().split()))
-    heapq.heappush(jewels, (M, -V))
+    M, V = map(int, sys.stdin.readline().rstrip().split())
+    jewels.append((M, -V))
 
 bags = []
 for _ in range(K):
-    heapq.heappush(bags, (int(sys.stdin.readline())))
+    bags.append(int(sys.stdin.readline()))
+
+jewels.sort()
+bags.sort()
 
 answer = 0
 
 jTemp = []
 
+jewels = deque(jewels)
+bags = deque(bags)
+
 while bags:
-    b = heapq.heappop(bags) 
+    b = bags.popleft()
+
     while jewels:
         if jewels[0][0] > b:
             break
-        m, v = heapq.heappop(jewels)
+        m, v = jewels.popleft()
+        
         heapq.heappush(jTemp, v)
 
     # 가방에 맞는 보석이 없을 경우
