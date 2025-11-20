@@ -36,10 +36,9 @@ for a in aSub.keys():
 
     bi = bisect.bisect_left(bSums, target)
 
-    for i in range(bi, len(bSums)):
-        if bSums[i] == target:
-            answer += bSub[bSums[i]] * aSub[a]
-        else:
-            break
+    if bi < len(bSums):
+        if bSums[bi] == target:
+            answer += bSub[bSums[bi]] * aSub[a]
+        
 
 print(answer)
